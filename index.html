@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Job Assistant - Smart Career Guidance</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h2>🤖 AI Job Assistant</h2>
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+                <button class="nav-btn" data-view="chat">Chat</button>
+                <button class="nav-btn" data-view="jobs">Jobs</button>
+                <button class="nav-btn" data-view="profile">Profile</button>
+                <button class="nav-btn" data-view="career">Career</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard View -->
+        <div id="dashboard" class="view active">
+            <div class="container">
+                <div class="hero-section">
+                    <h1>Welcome to Your AI Job Assistant</h1>
+                    <p class="hero-subtitle">Find your perfect job with AI-powered recommendations and career guidance</p>
+                    <div class="hero-actions">
+                        <button class="btn btn--primary btn--lg" data-action="start-chat">Start Job Search Chat</button>
+                        <button class="btn btn--outline btn--lg" data-action="browse-jobs">Browse Jobs</button>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>🎯 Quick Job Match</h3>
+                        <p>Get personalized job recommendations based on your profile</p>
+                        <button class="btn btn--secondary" data-action="quick-match">Get Matches</button>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>💬 AI Career Coach</h3>
+                        <p>Ask questions about career development and get expert advice</p>
+                        <button class="btn btn--secondary" data-action="career-chat">Ask Career Questions</button>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>📈 Skill Analysis</h3>
+                        <p>Identify skill gaps and get learning recommendations</p>
+                        <button class="btn btn--secondary" data-action="skill-analysis">Analyze Skills</button>
+                    </div>
+                </div>
+
+                <div class="recent-jobs">
+                    <h2>Recent Job Recommendations</h2>
+                    <div id="recent-jobs-container" class="jobs-grid">
+                        <!-- Jobs will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat View -->
+        <div id="chat" class="view">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2>AI Job Assistant</h2>
+                    <p>Ask me anything about jobs, careers, or skill development!</p>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            <p>Hello! I'm your AI job search assistant. I can help you find jobs, provide career advice, and guide your professional development. What would you like to explore today?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Ask me about jobs, careers, or skills..." class="form-control">
+                        <button id="sendBtn" class="btn btn--primary">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jobs View -->
+        <div id="jobs" class="view">
+            <div class="container">
+                <div class="jobs-header">
+                    <h1>Job Opportunities</h1>
+                    <div class="jobs-filters">
+                        <select id="locationFilter" class="form-control">
+                            <option value="">All Locations</option>
+                            <option value="Remote">Remote</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Chennai">Chennai</option>
+                        </select>
+                        <select id="experienceFilter" class="form-control">
+                            <option value="">All Experience</option>
+                            <option value="0-1">0-1 years</option>
+                            <option value="1-3">1-3 years</option>
+                            <option value="2-4">2-4 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="4-7">4-7 years</option>
+                        </select>
+                        <select id="skillFilter" class="form-control">
+                            <option value="">All Skills</option>
+                            <option value="Python">Python</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="React">React</option>
+                            <option value="Machine Learning">Machine Learning</option>
+                            <option value="AWS">AWS</option>
+                        </select>
+                        <button class="btn btn--primary" id="searchJobs">Search</button>
+                    </div>
+                </div>
+                <div id="jobs-container" class="jobs-grid">
+                    <!-- Jobs will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile View -->
+        <div id="profile" class="view">
+            <div class="container">
+                <div class="profile-container">
+                    <h1>Your Profile</h1>
+                    <div class="profile-completion">
+                        <p>Profile Completion: <span id="profileProgress">0%</span></p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-form">
+                        <div class="form-section">
+                            <h3>Personal Information</h3>
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" id="fullName" class="form-control" placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Location</label>
+                                <input type="text" id="location" class="form-control" placeholder="Enter your location">
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Professional Information</h3>
+                            <div class="form-group">
+                                <label class="form-label">Current Role</label>
+                                <input type="text" id="currentRole" class="form-control" placeholder="e.g. Software Engineer">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Experience Level</label>
+                                <select id="experienceLevel" class="form-control">
+                                    <option value="">Select Experience</option>
+                                    <option value="0-1">0-1 years</option>
+                                    <option value="1-3">1-3 years</option>
+                                    <option value="3-5">3-5 years</option>
+                                    <option value="5-7">5-7 years</option>
+                                    <option value="7+">7+ years</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Skills (comma-separated)</label>
+                                <textarea id="skills" class="form-control" placeholder="e.g. Python, JavaScript, Machine Learning" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Job Preferences</h3>
+                            <div class="form-group">
+                                <label class="form-label">Preferred Job Types</label>
+                                <div class="checkbox-group">
+                                    <label><input type="checkbox" value="Full-time"> Full-time</label>
+                                    <label><input type="checkbox" value="Part-time"> Part-time</label>
+                                    <label><input type="checkbox" value="Contract"> Contract</label>
+                                    <label><input type="checkbox" value="Remote"> Remote Only</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Expected Salary Range</label>
+                                <input type="text" id="salaryRange" class="form-control" placeholder="e.g. ₹10-15 LPA">
+                            </div>
+                        </div>
+
+                        <button class="btn btn--primary btn--full-width" id="saveProfile">Save Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Career View -->
+        <div id="career" class="view">
+            <div class="container">
+                <h1>Career Development</h1>
+                <div class="career-sections">
+                    <div class="career-section">
+                        <h2>Career Paths</h2>
+                        <div id="career-paths" class="career-paths-grid">
+                            <!-- Career paths will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="career-section">
+                        <h2>Skill Recommendations</h2>
+                        <div class="skill-recommendations">
+                            <p>Based on your profile and industry trends, here are skills to consider:</p>
+                            <div id="skill-recommendations" class="skills-list">
+                                <!-- Skills will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="career-section">
+                        <h2>Industry Insights</h2>
+                        <div class="insights-grid">
+                            <div class="insight-card">
+                                <h3>🚀 Tech Industry Trends</h3>
+                                <p>AI and Machine Learning skills are in high demand, with 40% growth in job postings.</p>
+                            </div>
+                            <div class="insight-card">
+                                <h3>💰 Salary Insights</h3>
+                                <p>Software Engineers with cloud skills command 25% higher salaries on average.</p>
+                            </div>
+                            <div class="insight-card">
+                                <h3>🎯 Remote Work</h3>
+                                <p>60% of tech companies now offer fully remote positions, up from 20% pre-pandemic.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Job Detail Modal -->
+    <div id="jobModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalJobTitle"></h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalJobContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--primary">Apply Now</button>
+                <button class="btn btn--secondary">Save Job</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
